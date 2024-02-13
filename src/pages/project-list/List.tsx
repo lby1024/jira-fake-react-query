@@ -1,5 +1,5 @@
 import { Table } from "antd"
-import { useProjectsUsers } from "../../http/hooks"
+import { useProjectsUsers } from "../../data";
 
 const columns = [
   {

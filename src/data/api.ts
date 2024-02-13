@@ -1,4 +1,4 @@
-import req from './http'
+import req from '../http'
 
 export class Api {
   

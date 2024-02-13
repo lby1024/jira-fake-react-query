@@ -1,21 +1,10 @@
 import { useMemo } from "react"
-import req from "./http"
 import useSWR from "swr"
-
-type User = {
-  id: number,
-  name: string
-}
+import { Project, User } from "../types"
+import req from '../http'
 
 export const useUsers = () => {
   return useSWR<User[]>('users', req)
-}
-
-type Project = {
-  id: number,
-  name: string,
-  personId: number,
-  organization: string
 }
 
 export const useProjects = () => {
@@ -38,7 +27,7 @@ export const useProjectsUsers = () => {
   }, [projects.data, users.data])
 
   return {
-    ...projects,
     data
   }
 }
+
