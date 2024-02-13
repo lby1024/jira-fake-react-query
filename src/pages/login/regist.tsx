@@ -29,11 +29,11 @@ export const Regist = () => {
 
   const {regist, loading} = useAuth()
 
-  return (
+  return <>
     <Form
       form={FormModel}
       subButton={<Button type="primary" loading={loading} >注册</Button>}
       onSuccess={data => regist(data)}
     />
-  )
+  </>
 }

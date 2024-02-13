@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { AxiosResponse } from "axios";
 
 /**
@@ -14,6 +15,7 @@ function resolveRes(response: AxiosResponse) {
   if (response.status === 404) {
     // 找不到地址,跳转到404页面
   }
+  return Promise.reject(response.data)
 }
 /**
  * 断网了, 服务器崩溃了执行这个函数
@@ -31,7 +33,7 @@ function noRes(err: any) {
 export function onErr(err: any) {
   const { response } = err;
   // 服务器返回了错误信息, 执行resolveRes()
-  if (response) resolveRes(response);
+  if (response) return resolveRes(response);
   // 断网了, 服务器崩溃了, 执行noRes()
-  else noRes(err);
+  else return noRes(err);
 }

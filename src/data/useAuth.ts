@@ -1,12 +1,15 @@
 import create from 'use-state-link'
 import { useState } from 'react'
 import { Api } from './api'
+import { message } from 'antd'
 
-const useUser = create({
-  id: undefined,
-  nickName: undefined,
-  token: undefined
-})
+type User = {
+  id?: number
+  nickName?: string
+  token?: string
+}
+
+const useUser = create<User|null>(null)
 
 export const useAuth = () => {
   const [user, setUser] = useUser()
@@ -14,10 +17,19 @@ export const useAuth = () => {
 
   const regist = async (data: any) => {
     setLoading(true)
-    const res = await Api.regist(data)
-    setUser(res)
-    setLoading(false)
+    return Api.regist(data)
+      .then(res => setUser(res))
+      .finally(() => setLoading(false))
   }
 
-  return { user, regist, loading }
+  const login = async (data: any) => {
+    setLoading(true)
+    return Api.login(data)
+      .then(res => setUser(res))
+      .finally(() => setLoading(false))
+  }
+
+  const logout = () => setUser(null)
+
+  return { user, loading, regist, logout, login }
 }

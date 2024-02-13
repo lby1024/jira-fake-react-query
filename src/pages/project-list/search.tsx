@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {Flex, Input, Select} from 'antd'
-import { useUsers } from "../../http"
+import { useUsers } from "../../data"
 
 export const Search = () => {
   const [param, setParam] = useState({

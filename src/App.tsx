@@ -4,12 +4,12 @@ import { useAuth } from './data'
 
 function App() {
 
-  const { user, regist } = useAuth()
+  const { user } = useAuth()
 
   return (
     <>
       {
-        user.token ? <ProjectList/> : <LoginPage/>
+        user ? <ProjectList/> : <LoginPage/>
       }
     </>
   )
