@@ -1,5 +1,7 @@
 import { Button, Input } from "antd"
 import { Form, required, min, formItem, label, password, rule } from "sweety-form"
+import { Api } from "../../http"
+import { useAuth } from "../../store/useAuth"
 
 class FormModel {
 
@@ -7,7 +9,7 @@ class FormModel {
   @formItem(<Input placeholder="nick name" />)
   @required()
   @min(3)
-  email: string
+  nickName: string
 
   @label('密码')
   @formItem(<Input.Password placeholder="password"/>)
@@ -26,11 +28,13 @@ function rePassword(v: string, formData: FormModel) {
 
 export const Regist = () => {
 
+  const {regist} = useAuth()
+
   return (
     <Form
       form={FormModel}
       subButton={<Button type="primary" >submit</Button>}
-      onSuccess={res => console.log(res)}
+      onSuccess={data => regist(data)}
     />
   )
 }

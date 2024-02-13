@@ -19,7 +19,8 @@
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.8",
     "sweety-form": "^0.0.1",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "use-state-link": "^0.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

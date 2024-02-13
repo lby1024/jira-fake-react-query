@@ -2946,6 +2946,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-state-link@^0.0.1:
+  version "0.0.1"
+  resolved "https://r.cnpmjs.org/use-state-link/-/use-state-link-0.0.1.tgz"
+  integrity sha512-qYazfkjgIp/kjpMHSJk3ufTFYCAzNi46pAuOdxXlwSCz09CItNAZ7Dv0TxOvQU/B9U6bbLnDRQVqs4elXY15fw==
+
 use-sync-external-store@^1.2.0:
   version "1.2.0"
   resolved "https://r.cnpmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
