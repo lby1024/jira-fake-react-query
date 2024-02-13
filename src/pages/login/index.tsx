@@ -7,22 +7,34 @@ import { styled } from 'styled-components'
 export const LoginPage = () => {
   const [isRegist, setRegist] = useState(false)
 
+  const btnInfo = isRegist ? "已经有账号了？直接登录" : "没有账号？注册新账号"
+
   return (
-    <Flex style={{ width: '100vw', height: '100vh' }} justify='center' align='center' >
-      <Card style={{ width: '39vw', height: '50vh' }}>
+    <Content justify='center' align='center' >
+      <ShadowCard>
         <Title>{isRegist ? "请注册" : "请登录"}</Title>
-          { isRegist ? <Regist/> : <Login/> }
-          <Divider />
-          <Button type='link' onClick={()=>setRegist(!isRegist)} >
-            { isRegist ? "已经有账号了？直接登录" : "没有账号？注册新账号" }
-          </Button>
-      </Card>
-    </Flex>
+        { isRegist ? <Regist/> : <Login/> }
+        <Divider />
+        <Button type='link' onClick={()=>setRegist(!isRegist)} >{ btnInfo }</Button>
+      </ShadowCard>
+    </Content>
   )
 }
 
+const Content = styled(Flex)`
+  width: 100vw;
+  height: 100vh;
+`
 
 const Title = styled.h2`
   margin-bottom: 2.4rem;
   color: rgb(94, 108, 132);
+`;
+
+const ShadowCard = styled(Card)`
+  width: 50vw;
+  min-height: 39vh;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
 `;
