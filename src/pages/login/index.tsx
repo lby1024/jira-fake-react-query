@@ -3,9 +3,11 @@ import { Regist } from './regist'
 import { useState } from 'react'
 import { Login } from './login'
 import { styled } from 'styled-components'
+import { useTitle } from '../../tool/useTitle'
 
 export const LoginPage = () => {
   const [isRegist, setRegist] = useState(false)
+  useTitle('登录注册')
   const btnInfo = isRegist ? "已经有账号了？直接登录" : "没有账号？注册新账号"
 
   return (

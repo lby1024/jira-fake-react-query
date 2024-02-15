@@ -49,4 +49,4 @@ axios.interceptors.response.use(
   onErr // errCode以4,5开头走这里,例如404, 500
 );
 
-export default axios;
+export const http = axios

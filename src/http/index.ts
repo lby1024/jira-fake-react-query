@@ -1,1 +1,1 @@
-export {default} from './http'
+export {http} from './http'

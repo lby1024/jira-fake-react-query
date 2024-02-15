@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {Flex, Input, Select} from 'antd'
-import { useUsers } from "../../data"
+import { useUsers } from "../../model/User"
 
 export const Search = () => {
   const [param, setParam] = useState({
@@ -24,7 +24,7 @@ export const Search = () => {
     })
   }
 
-  return <Flex gap='small'>
+  return <Flex gap='middle' style={{width: '39rem'}}>
     <Input onChange={e => onInput(e.target.value)} />
     <Select value={param.personId} onChange={v => onSelect(v)} >
       <Select.Option value='' >负责人</Select.Option>

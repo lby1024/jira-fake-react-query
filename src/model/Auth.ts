@@ -1,17 +1,12 @@
-import create, {applyMiddleWare} from 'use-state-link'
-import { useState } from 'react'
-import { Api } from './api'
-import { persist } from '../tool/persist'
+import { persist } from "../tool/persist"
+import create, { applyMiddleWare } from 'use-state-link'
+import { useState } from "react"
+import { User, UserType } from "./User"
 
-type User = {
-  id?: number
-  nickName?: string
-  token?: string
-}
 // 强缓存
 const {initialData, middleWare} = persist('user', null)
 
-const useUser = create<User|null>(initialData, applyMiddleWare(middleWare))
+const useUser = create<UserType|null>(initialData, applyMiddleWare(middleWare))
 
 export const useAuth = () => {
   const [user, setUser] = useUser()
@@ -19,14 +14,14 @@ export const useAuth = () => {
 
   const regist = async (data: any) => {
     setLoading(true)
-    return Api.regist(data)
+    return User.regist(data)
       .then(res => setUser(res))
       .finally(() => setLoading(false))
   }
 
   const login = async (data: any) => {
     setLoading(true)
-    return Api.login(data)
+    return User.login(data)
       .then(res => setUser(res))
       .finally(() => setLoading(false))
   }

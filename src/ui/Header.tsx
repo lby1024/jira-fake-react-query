@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Dropdown, MenuProps } from 'antd';
 import { styled } from "styled-components";
-import { useAuth } from "../../data";
+import { useAuth } from "../model/Auth";
 
 const UserBtn = () => {
     const { logout, user } = useAuth()

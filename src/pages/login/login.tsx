@@ -1,7 +1,7 @@
 import { Button, Input, message } from "antd"
 import { useForm, required, min, password } from "sweety-form"
-import { useAuth } from "../../data"
 import styled from 'styled-components'
+import { useAuth } from "../../model/Auth"
 
 
 class FormModel {

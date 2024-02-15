@@ -1,6 +1,6 @@
+import { useAuth } from './model/Auth'
 import { LoginPage } from './pages/login'
 import { ProjectList } from './pages/project-list'
-import { useAuth } from './data'
 
 function App() {
 

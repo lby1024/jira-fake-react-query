@@ -1,14 +1,18 @@
-import { useMemo } from "react"
 import useSWR from "swr"
-import { Project, User } from "../types"
-import req from '../http'
+import { useUsers } from "./User"
+import { useMemo } from "react"
+import { http } from "../http"
 
-export const useUsers = () => {
-  return useSWR<User[]>('users', req)
+export type ProjectType = {
+  id?: number,
+  name?: string,
+  personId?: number,
+  organization?: string
 }
 
+
 export const useProjects = () => {
-  return useSWR<Project[]>('projects', req)
+  return useSWR<ProjectType[]>('projects', http)
 }
 
 export const useProjectsUsers = () => {
@@ -27,7 +31,8 @@ export const useProjectsUsers = () => {
   }, [projects.data, users.data])
 
   return {
-    data
+    isloading: projects.isLoading || projects.isLoading,
+    error: projects.error || users.error || null,
+    data,
   }
 }
-
