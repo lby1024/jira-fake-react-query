@@ -1,15 +1,17 @@
-import create from 'use-state-link'
+import create, {applyMiddleWare} from 'use-state-link'
 import { useState } from 'react'
 import { Api } from './api'
-import { message } from 'antd'
+import { persist } from '../tool/persist'
 
 type User = {
   id?: number
   nickName?: string
   token?: string
 }
+// 强缓存
+const {initialData, middleWare} = persist('user', null)
 
-const useUser = create<User|null>(null)
+const useUser = create<User|null>(initialData, applyMiddleWare(middleWare))
 
 export const useAuth = () => {
   const [user, setUser] = useUser()

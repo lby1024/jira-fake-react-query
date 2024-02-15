@@ -1,39 +1,68 @@
-import { Button, Input } from "antd"
-import { Form, required, min, formItem, label, password, rule } from "sweety-form"
+import { Button, Input, message } from "antd"
+import { useForm, required, min, password, rule } from "sweety-form"
 import { useAuth } from "../../data"
+import styled from 'styled-components'
+
 
 class FormModel {
-
-  @label('昵称')
-  @formItem(<Input placeholder="nick name" />)
   @required()
   @min(3)
   nickName: string
 
-  @label('密码')
-  @formItem(<Input.Password placeholder="password"/>)
   @password('密码只能由数字或字母或符号组成')
   password: string
 
-  @label('确认密码')
-  @formItem(<Input.Password placeholder="password"/>)
-  @rule(rePassword)
+  @rule(repassword)
   repassword: string
 }
 
-function rePassword(v: string, formData: FormModel) {
-  if(v !== formData['password']) return '密码不一致'
+function repassword(v: string, formData: FormModel) {
+  if(v !== formData.password) return '密码不一致'
 }
 
 export const Regist = () => {
+  const { regist, loading } = useAuth()
+  const [messageApi, contextHolder] = message.useMessage();
+  const [{errors}, {name, submit}] = useForm<FormModel>({
+    FormModel,
+    onSuccess
+  })
+  
+  function onSuccess(data: any) {
+    regist(data).catch(err => error(err))
+  }
 
-  const {regist, loading} = useAuth()
+  const error = (err: any) => {
+    messageApi.open({
+      type: 'error',
+      content: err.message
+    });
+  };
 
-  return <>
-    <Form
-      form={FormModel}
-      subButton={<Button type="primary" loading={loading} >注册</Button>}
-      onSuccess={data => regist(data)}
-    />
-  </>
+  return <Content>
+    {contextHolder}
+
+    <Input {...name('nickName')} placeholder="nick name" />
+    <ErrorInfo>{errors.nickName}</ErrorInfo>
+
+    <Input.Password {...name('password')} placeholder="password" />
+    <ErrorInfo>{errors.password}</ErrorInfo>
+
+    <Input.Password {...name('repassword')} placeholder="repassword" />
+    <ErrorInfo>{errors.repassword}</ErrorInfo>
+
+    <Button className="btn" type="primary" loading={loading} onClick={submit} >注册</Button>
+  </Content>
 }
+
+const Content = styled.div`
+  .btn {
+    width: 100%;
+  }
+`
+
+const ErrorInfo = styled.div`
+  height: 1.6rem;
+  font-size: 12px;
+  color: deeppink;
+`

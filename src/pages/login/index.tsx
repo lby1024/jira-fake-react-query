@@ -1,12 +1,11 @@
 import { Button, Card, Divider, Flex } from 'antd'
-import {Regist} from './regist'
+import { Regist } from './regist'
 import { useState } from 'react'
 import { Login } from './login'
 import { styled } from 'styled-components'
 
 export const LoginPage = () => {
   const [isRegist, setRegist] = useState(false)
-
   const btnInfo = isRegist ? "已经有账号了？直接登录" : "没有账号？注册新账号"
 
   return (
@@ -32,7 +31,7 @@ const Title = styled.h2`
 `;
 
 const ShadowCard = styled(Card)`
-  width: 50vw;
+  width: 30rem;
   min-height: 39vh;
   border-radius: 0.3rem;
   box-sizing: border-box;

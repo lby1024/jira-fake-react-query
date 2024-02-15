@@ -1,5 +1,6 @@
-import { Table } from "antd"
-import { useProjectsUsers } from "../../data";
+import { Button, Table } from "antd"
+import { useAuth, useProjectsUsers } from "../../data";
+import Header from "../../ui/Header";
 
 const columns = [
   {
@@ -16,9 +17,9 @@ const columns = [
 export const List = () => {
 
   const projects = useProjectsUsers()
-  console.log(projects.data);
+  const { logout } = useAuth()
   
-  
-  return <Table columns={columns} dataSource={projects.data} />
-  // return <div>xx</div>
+  return <>
+    <Table columns={columns} dataSource={projects.data} />
+  </>
 }
