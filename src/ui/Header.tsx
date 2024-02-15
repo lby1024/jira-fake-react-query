@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Dropdown, MenuProps } from 'antd';
 import { styled } from "styled-components";
 import { useAuth } from "../model/Auth";
+import { Link } from "react-router-dom";
 
 const UserBtn = () => {
     const { logout, user } = useAuth()
@@ -20,7 +21,7 @@ const Header: FC = () => {
 
     return (
         <Container>
-            <h1>Jira</h1>
+            <Link to='/projects' className="jira" >Jira</Link>
             <div>项目</div>
             <div>用户</div>
             <div></div>
@@ -37,6 +38,12 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: 9rem 100px 100px 1fr 100px;
     grid-template-rows: 1fr;
+    .jira {
+        font-size: 2rem;
+        color: #333;
+        font-weight: bolder;
+        text-decoration: none;
+    }
     > * {
         display: flex;
         justify-content: center;
