@@ -8,7 +8,6 @@ export const ProjectList = () => {
   useTitle('项目列表')
   
   return <Flex vertical gap='middle'>
-    <Header/>
     <h1>项目列表</h1>
     <Search/>
     <ProjectTable/>

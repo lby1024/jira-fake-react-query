@@ -32,8 +32,5 @@ export const ProjectTable = () => {
 
   const {data, error, isloading} = useProjectsUsers()
   
-  return <>  
-    
-    <Table columns={columns} dataSource={data} loading={isloading} />
-  </>
+  return <Table columns={columns} dataSource={data} loading={isloading} />
 }

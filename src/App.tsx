@@ -1,6 +1,6 @@
 import { useAuth } from './model/Auth'
 import { LoginPage } from './pages/login'
-import { ProjectList } from './pages/project-list'
+import { Router } from './router'
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       {
-        user ? <ProjectList/> : <LoginPage/>
+        user ? <Router/> : <LoginPage/>
       }
     </>
   )
