@@ -18,14 +18,10 @@ export const Login = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [{errors}, {name, submit}] = useForm<FormModel>({
     FormModel,
-    onSuccess
+    onSuccess: data => login(data)
   })
   
-  function onSuccess(data: any) {
-    login(data).catch(err => error(err))
-  }
-
-  const error = (err: any) => {
+  const showError = (err: any) => {
     messageApi.open({
       type: 'error',
       content: err.message

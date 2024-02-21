@@ -1,10 +1,8 @@
-import { createBrowserRouter, RouterProvider, Navigate, RouteObject } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
 import { ProjectList } from "../pages/project-list";
-import { HeadLayout } from "./HeadLayout";
 import { PageKanban } from "../pages/kanban";
 import { Epic } from "../pages/epic";
 import { SideNavLayout } from "./SideNavLayout";
-import { Page404 } from "../pages/404";
 
 const sideNavRouter: RouteObject[] = [{
   path: '',
@@ -17,23 +15,15 @@ const sideNavRouter: RouteObject[] = [{
   element: <Epic />
 }]
 
-const headRouter: RouteObject[] = [{
-  path: '',
-  element: <Navigate to='projects' />
-}, {
+
+export const router = createBrowserRouter([{
   path: 'projects',
   element: <ProjectList />,
 }, {
   path: 'projects/:id',
   element: <SideNavLayout />,
   children: sideNavRouter
-}]
-
-const router = createBrowserRouter([{
-  path: '',
-  element: <HeadLayout />,
-  children: headRouter,
-  errorElement: <Page404 />
+}, {
+  path: '*',
+  element: <Navigate to='projects' />
 }])
-
-export const Router = () => <RouterProvider router={router} />

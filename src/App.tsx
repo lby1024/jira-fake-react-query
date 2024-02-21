@@ -1,15 +1,15 @@
 import { useAuth } from './model/Auth'
 import { LoginPage } from './pages/login'
-import { Router } from './router'
+import { HeadLayout } from './router/HeadLayout'
 
 function App() {
 
-  const { user } = useAuth()
+  const { token } = useAuth()
 
   return (
     <>
       {
-        user ? <Router/> : <LoginPage/>
+        token ? <HeadLayout/> : <LoginPage/>
       }
     </>
   )

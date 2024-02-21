@@ -1,32 +1,52 @@
-import { persist } from "../tool/persist"
-import create, { applyMiddleWare } from 'use-state-link'
 import { useState } from "react"
-import { User, UserType } from "./User"
+import { useHttp } from "../http"
+import { persist } from "../tool/persist"
+import { UserType } from "./User"
+import create, { applyMiddleWare } from 'use-state-link'
 
-// 强缓存
-const {initialData, middleWare} = persist('user', null)
+export class Auth {
+  static tokenKey = 'accessToken'
+  static url = {
+    login: 'login',
+    regist: 'regist'
+  }
+}
 
-const useUser = create<UserType|null>(initialData, applyMiddleWare(middleWare))
+const { initialData, middleWare } = persist(Auth.tokenKey, '')
+
+const useToken = create(
+  initialData,
+  applyMiddleWare(middleWare)
+)
 
 export const useAuth = () => {
-  const [user, setUser] = useUser()
+  const [token, setToken] = useToken()
   const [loading, setLoading] = useState(false)
+  const http = useHttp()
 
-  const regist = async (data: any) => {
+  const login = (data: UserType) => {
     setLoading(true)
-    return User.regist(data)
-      .then(res => setUser(res))
+    return http.post<UserType, UserType>(Auth.url.login, data)
+      .then(user => setToken(user.token))
       .finally(() => setLoading(false))
   }
 
-  const login = async (data: any) => {
+  const regist = (data: UserType) => {
     setLoading(true)
-    return User.login(data)
-      .then(res => setUser(res))
+    return http.post<UserType, UserType>(Auth.url.regist, data)
+      .then(user => setToken(user.token))
       .finally(() => setLoading(false))
   }
 
-  const logout = () => setUser(null)
+  const logout = () => {
+    setToken('')
+  }
 
-  return { user, loading, regist, logout, login }
+  return {
+    token,
+    login,
+    regist,
+    logout,
+    loading,
+  }
 }

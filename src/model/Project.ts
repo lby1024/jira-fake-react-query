@@ -1,7 +1,7 @@
 import useSWR from "swr"
 import { useUsers } from "./User"
 import { useMemo } from "react"
-import { http } from "../http"
+import { useHttp } from "../http"
 
 export type ProjectType = {
   id?: number,
@@ -12,6 +12,7 @@ export type ProjectType = {
 
 
 export const useProjects = () => {
+  const http = useHttp()
   return useSWR<ProjectType[]>('projects', http)
 }
 

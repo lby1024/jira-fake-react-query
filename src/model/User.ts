@@ -1,5 +1,6 @@
 import useSWR from "swr"
-import { http } from "../http"
+import { useHttp } from "../http"
+import { useQuery } from "@tanstack/react-query"
 
 export type UserType = {
   id?: number,
@@ -10,15 +11,22 @@ export type UserType = {
 
 export class User {
 
-  static regist(data: any) {
-    return http.post('regist', data)
+  static url = {
+    me: 'me',
+    users: 'users'
   }
 
-  static login(data: any) {
-    return http.post('login', data)
-  }
 }
 
 export const useUsers = () => {
+  const http = useHttp()
   return useSWR<UserType[]>('users', http)
+}
+
+export const useUser = () => {
+  const http = useHttp()
+  return useQuery({
+    queryKey: [User.url.me],
+    queryFn: ()=>http.get(User.url.me)
+  })
 }

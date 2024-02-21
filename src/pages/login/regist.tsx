@@ -24,13 +24,9 @@ export const Regist = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [{errors}, {name, submit}] = useForm<FormModel>({
     FormModel,
-    onSuccess
+    onSuccess: data => regist(data)
   })
   
-  function onSuccess(data: any) {
-    regist(data).catch(err => error(err))
-  }
-
   const error = (err: any) => {
     messageApi.open({
       type: 'error',

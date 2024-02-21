@@ -2,15 +2,19 @@ import { FC } from "react";
 import { Dropdown, MenuProps } from 'antd';
 import { styled } from "styled-components";
 import { useAuth } from "../model/Auth";
-import { Link } from "react-router-dom";
+import { resetRoute } from "../tool";
+import { useUser } from "../model/User";
 
 const UserBtn = () => {
-    const { logout, user } = useAuth()
-
+    const { logout } = useAuth()
+    const { data:user } = useUser()
+    
     const items: MenuProps['items'] = [{
         key: '1',
         label: <div onClick={logout} >登出</div>
     }]
+
+    if(!user) return
 
     return <Dropdown menu={{items}} >
         <span>Hi, {user?.nickName}</span>
@@ -21,7 +25,7 @@ const Header: FC = () => {
 
     return (
         <Container>
-            <Link to='/projects' className="jira" >Jira</Link>
+            <h3 className="jira" onClick={resetRoute} >Jira</h3>
             <div>项目</div>
             <div>用户</div>
             <div></div>

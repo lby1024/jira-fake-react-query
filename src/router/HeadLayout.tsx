@@ -1,9 +1,10 @@
-import Header from "../ui/Header"
-import { Outlet } from 'react-router-dom'
+import { router } from "."
+import Header from "../component/Header"
+import { RouterProvider } from 'react-router-dom'
 
 export const HeadLayout = () => {
-  return <>
+  return <div>
     <Header/>
-    <Outlet/>
-  </>
+    <RouterProvider router={router} />
+  </div>
 }
