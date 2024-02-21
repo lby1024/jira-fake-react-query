@@ -14,7 +14,7 @@ export class Auth {
 
 const { initialData, middleWare } = persist(Auth.tokenKey, '')
 
-const useToken = create(
+export const useToken = create(
   initialData,
   applyMiddleWare(middleWare)
 )

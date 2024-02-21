@@ -14,11 +14,11 @@ const UserBtn = () => {
         label: <div onClick={logout} >登出</div>
     }]
 
-    if(!user) return
-
     return <Dropdown menu={{items}} >
         <span>Hi, {user?.nickName}</span>
     </Dropdown>
+
+    // return <div>xx</div>
 }
 
 const Header: FC = () => {

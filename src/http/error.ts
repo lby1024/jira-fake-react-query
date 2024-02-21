@@ -7,7 +7,7 @@ let ctx:CTX = undefined
 function resolveRes(response: AxiosResponse) {
   if (response.status === 401) {
     // 未登录,跳转到登录页面
-    ctx && ctx?.logout()
+    ctx.setToken('')
   }
   if (response.status === 403) {
     // token过期,跳转到登录页面或者刷新token重新发送请求

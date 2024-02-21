@@ -6,7 +6,7 @@ import {
   productionBaseUrl
 } from "./config";
 import { onErr } from "./error";
-import { useAuth } from "../model/Auth";
+import { useToken } from "../model/Auth";
 
 export function getBaseUrl() {
   if (env === "test") return testBaseUrl;
@@ -17,16 +17,16 @@ export function getBaseUrl() {
 let hasInit = false
 
 export type CTX = {
-  token: string,
-  logout: (...args: any[])=>any
+  token?: string,
+  setToken?: Function
 }
 
 export const useHttp = () => {
-  const {token, logout} = useAuth()
-  const ctx = {token, logout}
+
+  const [token, setToken] = useToken()
 
   if (hasInit === false) {
-    init(ctx)
+    init({token, setToken})
     hasInit = true
   }
 

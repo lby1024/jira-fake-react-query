@@ -25,7 +25,7 @@ export const useUsers = () => {
 
 export const useUser = () => {
   const http = useHttp()
-  return useQuery({
+  return useQuery<UserType>({
     queryKey: [User.url.me],
     queryFn: ()=>http.get(User.url.me)
   })
