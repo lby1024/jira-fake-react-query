@@ -37,21 +37,23 @@ export const useAuth = () => {
 
   const user = useQuery({
     queryKey: [User.url.me],
-    queryFn: () => http.get<any, UserType>(User.url.me)
+    queryFn: () => http.get<any, UserType>(User.url.me),
+    staleTime: 10000000000 // 重新获取数据的时间间隔 默认0, 这里获取到数据后就不再自动获取数据了
   })
 
   const login = useMutation({
     mutationFn: Auth.login,
-    onSuccess: (user) => queryClient.setQueryData([User.url.me], () => user)
+    onSuccess: () => queryClient.invalidateQueries({queryKey: [User.url.me]}) // 登录成功后,重新获取userInfo
   })
   
   const regist = useMutation({
-    mutationFn: Auth.login,
-    onSuccess: () => queryClient.invalidateQueries({queryKey: [User.url.me]})
+    mutationFn: Auth.regist,
+    onSuccess: (user) => queryClient.setQueryData([User.url.me], user) // 注册成功后,修改本地缓存
   })
 
   const logout = () => {
-    queryClient.clear()
+    queryClient.setQueryData([User.url.me], null) 
+    queryClient.clear() // clear数据清空后,视图并不会响应,所有上面要用setQueryData
     Auth.setToken('')
   }
 
