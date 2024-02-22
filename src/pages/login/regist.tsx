@@ -20,7 +20,7 @@ function repassword(v: string, formData: FormModel) {
 }
 
 export const Regist = () => {
-  const { regist, loading } = useAuth()
+  const { regist, submiting } = useAuth()
   const [messageApi, contextHolder] = message.useMessage();
   const [{errors}, {name, submit}] = useForm<FormModel>({
     FormModel,
@@ -46,7 +46,7 @@ export const Regist = () => {
     <Input.Password {...name('repassword')} placeholder="repassword" />
     <ErrorInfo>{errors.repassword}</ErrorInfo>
 
-    <Button className="btn" type="primary" loading={loading} onClick={submit} >注册</Button>
+    <Button className="btn" type="primary" loading={submiting} onClick={submit} >注册</Button>
   </Content>
 }
 

@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FC } from "react";
-import { useAuth } from "../model/Auth";
 
 interface QueryProps {
   children: any
@@ -9,7 +8,8 @@ interface QueryProps {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
+      retry: 0, // 失败重试次数 默认 3次
+      refetchOnWindowFocus: false,  // 窗口重新获得焦点时重新获取数据
     }
   }
 });

@@ -3,22 +3,18 @@ import { Dropdown, MenuProps } from 'antd';
 import { styled } from "styled-components";
 import { useAuth } from "../model/Auth";
 import { resetRoute } from "../tool";
-import { useUser } from "../model/User";
 
 const UserBtn = () => {
-    const { logout } = useAuth()
-    const { data:user } = useUser()
-    
+    const { logout, userInfo } = useAuth()
+
     const items: MenuProps['items'] = [{
         key: '1',
         label: <div onClick={logout} >登出</div>
     }]
 
     return <Dropdown menu={{items}} >
-        <span>Hi, {user?.nickName}</span>
+        <span>Hi, {userInfo.nickName}</span>
     </Dropdown>
-
-    // return <div>xx</div>
 }
 
 const Header: FC = () => {

@@ -14,7 +14,7 @@ class FormModel {
 }
 
 export const Login = () => {
-  const { login, loading } = useAuth()
+  const { login, submiting } = useAuth()
   const [messageApi, contextHolder] = message.useMessage();
   const [{errors}, {name, submit}] = useForm<FormModel>({
     FormModel,
@@ -37,7 +37,7 @@ export const Login = () => {
     <Input.Password {...name('password')} placeholder="password" />
     <ErrorInfo>{errors.password}</ErrorInfo>
 
-    <Button className="btn" type="primary" loading={loading} onClick={submit} >登录</Button>
+    <Button className="btn" type="primary" loading={submiting} onClick={submit} >登录</Button>
   </Content>
 }
 

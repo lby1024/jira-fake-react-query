@@ -1,15 +1,17 @@
 import { useAuth } from './model/Auth'
 import { LoginPage } from './pages/login'
 import { HeadLayout } from './router/HeadLayout'
+import { useMounted } from './tool/useMounted'
 
 function App() {
 
-  const { token } = useAuth()
+  const auth = useAuth()
+  
 
   return (
     <>
       {
-        token ? <HeadLayout/> : <LoginPage/>
+        auth.userInfo ? <HeadLayout/> : <LoginPage/>
       }
     </>
   )

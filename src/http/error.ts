@@ -1,13 +1,10 @@
 import { AxiosResponse } from "axios";
-import { CTX } from "./http";
-let ctx:CTX = undefined
 /**
  * 收到server错误信息后执行这个函数
  */
 function resolveRes(response: AxiosResponse) {
   if (response.status === 401) {
     // 未登录,跳转到登录页面
-    ctx.setToken('')
   }
   if (response.status === 403) {
     // token过期,跳转到登录页面或者刷新token重新发送请求
@@ -31,8 +28,7 @@ function noRes(err: any) {
 /**
  * errCode以4,5触发函数,例如404, 500
  */
-export const onErr = (ctx: CTX) => (err: any) => {
-  ctx = ctx
+export const onErr = (err: any) => {
   const { response } = err;
   // 服务器返回了错误信息, 执行resolveRes()
   if (response) return resolveRes(response);
