@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { http } from "../http"
-import { User, UserType } from "./User"
+import { User, UserType, useUser } from "./User"
 import create from 'use-state-link'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -34,16 +34,11 @@ export class Auth {
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
-
-  const user = useQuery({
-    queryKey: [User.url.me],
-    queryFn: () => http.get<any, UserType>(User.url.me),
-    staleTime: 10000000000 // 重新获取数据的时间间隔 默认0, 这里获取到数据后就不再自动获取数据了
-  })
+  const user = useUser()
 
   const login = useMutation({
     mutationFn: Auth.login,
-    onSuccess: () => queryClient.invalidateQueries({queryKey: [User.url.me]}) // 登录成功后,重新获取userInfo
+    onSuccess: () => user.refetch() // 登录成功后,重新获取userInfo
   })
   
   const regist = useMutation({
