@@ -4,7 +4,6 @@ import { LoginPage } from './pages/login'
 import { HeadLayout } from './router/HeadLayout'
 
 function App() {
-
   const { userInfo, isLoading } = useAuth()
 
   if (isLoading) return <FullPageLoading />

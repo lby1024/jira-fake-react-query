@@ -1,4 +1,3 @@
-import useSWR from "swr"
 import { http } from "../http"
 import { useQuery } from "@tanstack/react-query"
 import { useMounted } from "../tool/useMounted"
@@ -16,11 +15,13 @@ export class User {
     me: 'me',
     users: 'users'
   }
-
 }
 
 export const useUsers = () => {
-  return useSWR<UserType[]>('users', http)
+  return useQuery<UserType[]>({
+    queryKey: [User.url.users],
+    queryFn: () => http.get(User.url.users)
+  })
 }
 
 export const useUser = () => {

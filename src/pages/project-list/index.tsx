@@ -5,10 +5,10 @@ import { useTitle } from "../../tool/useTitle"
 
 export const ProjectList = () => {
   useTitle('项目列表')
-  
+
   return <Flex vertical gap='middle'>
     <h1>项目列表</h1>
-    {/* <Search/>
-    <ProjectTable/> */}
+    <Search />
+    <ProjectTable />
   </Flex>
 }

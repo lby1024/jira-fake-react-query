@@ -12,7 +12,7 @@ const UserBtn = () => {
         label: <div onClick={logout} >登出</div>
     }]
 
-    return <Dropdown menu={{items}} >
+    return <Dropdown menu={{ items }} >
         <span>Hi, {userInfo.nickName}</span>
     </Dropdown>
 }
@@ -25,7 +25,7 @@ const Header: FC = () => {
             <div>项目</div>
             <div>用户</div>
             <div></div>
-            <UserBtn/> 
+            <UserBtn />
         </Container>
     )
 }

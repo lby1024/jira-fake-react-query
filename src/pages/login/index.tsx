@@ -10,14 +10,18 @@ export const LoginPage = () => {
   const [isRegist, setRegist] = useState(false)
   const btnInfo = isRegist ? "已经有账号了？直接登录" : "没有账号？注册新账号"
 
+  const Card = (
+    <ShadowCard>
+      <Title>{isRegist ? "请注册" : "请登录"}</Title>
+      {isRegist ? <Regist /> : <Login />}
+      <Divider />
+      <Button type='link' onClick={() => setRegist(!isRegist)} >{btnInfo}</Button>
+    </ShadowCard>
+  )
+
   return (
     <Content justify='center' align='center' >
-      <ShadowCard>
-        <Title>{isRegist ? "请注册" : "请登录"}</Title>
-        { isRegist ? <Regist/> : <Login/> }
-        <Divider />
-        <Button type='link' onClick={()=>setRegist(!isRegist)} >{ btnInfo }</Button>
-      </ShadowCard>
+      {Card}
     </Content>
   )
 }

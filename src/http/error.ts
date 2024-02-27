@@ -1,9 +1,11 @@
 import { AxiosResponse } from "axios";
+import { Auth } from "../model/Auth";
 /**
  * 收到server错误信息后执行这个函数
  */
 function resolveRes(response: AxiosResponse) {
   if (response.status === 401) {
+    Auth.logout()
     // 未登录,跳转到登录页面
   }
   if (response.status === 403) {

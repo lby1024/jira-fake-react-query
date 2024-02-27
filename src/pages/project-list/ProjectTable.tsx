@@ -8,7 +8,7 @@ const columns = [
     dataIndex: 'pin',
     key: 'pin',
     render: () => <Checkbox checked={true} />
-  },{
+  }, {
     title: '项目名称',
     dataIndex: 'name',
     key: 'name'
@@ -30,7 +30,7 @@ const columns = [
 
 export const ProjectTable = () => {
 
-  const {data, error, isloading} = useProjectsUsers()
-  
-  return <Table columns={columns} dataSource={data} loading={isloading} />
+  const { data, error, isloading } = useProjectsUsers()
+
+  return <Table columns={columns} dataSource={data} loading={isloading} pagination={false} />
 }

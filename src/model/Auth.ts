@@ -2,7 +2,8 @@ import { useState } from "react"
 import { http } from "../http"
 import { User, UserType, useUser } from "./User"
 import create from 'use-state-link'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Pop } from "../component/Pop";
 
 export class Auth {
   static tokenKey = 'accessToken'
@@ -30,6 +31,8 @@ export class Auth {
     Auth.setToken(userInfo.token)
     return userInfo
   }
+
+  static logout: Function // useAuth执行时会被赋值
 }
 
 export const useAuth = () => {
@@ -38,16 +41,18 @@ export const useAuth = () => {
 
   const login = useMutation({
     mutationFn: Auth.login,
-    onSuccess: () => user.refetch() // 登录成功后,重新获取userInfo
-  })
-  
-  const regist = useMutation({
-    mutationFn: Auth.regist,
-    onSuccess: (user) => queryClient.setQueryData([User.url.me], user) // 注册成功后,修改本地缓存
+    onSuccess: () => user.refetch(), // 登录成功后,重新获取userInfo
+    onError: (err) => { Pop.error(err.message) }
   })
 
-  const logout = () => {
-    queryClient.setQueryData([User.url.me], null) 
+  const regist = useMutation({
+    mutationFn: Auth.regist,
+    onSuccess: (user) => queryClient.setQueryData([User.url.me], user), // 注册成功后,修改本地缓存
+    onError: (err) => { Pop.error(err.message) },
+  })
+
+  Auth.logout = () => {
+    queryClient.setQueryData([User.url.me], null)
     queryClient.clear() // clear数据清空后,视图并不会响应,所有上面要用setQueryData
     Auth.setToken('')
   }
@@ -58,7 +63,7 @@ export const useAuth = () => {
     submiting: login.isPending || regist.isPending,
     login: login.mutate,
     regist: regist.mutate,
-    logout,
+    logout: Auth.logout,
   }
 }
 
@@ -96,7 +101,7 @@ export const useAuth2 = () => {
         setUser(user)
         setState('success')
       })
-      .catch(()=>setState('error'))
+      .catch(() => setState('error'))
   }
 
   const logout = () => {
@@ -113,5 +118,3 @@ export const useAuth2 = () => {
     getUserInfo,
   }
 }
-
-
