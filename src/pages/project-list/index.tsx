@@ -1,7 +1,7 @@
 import { Flex } from "antd"
 import { ProjectTable } from "./ProjectTable"
-import { Search } from "./search"
 import { useTitle } from "../../tool/useTitle"
+import { Search } from "./Search"
 
 export const ProjectList = () => {
   useTitle('项目列表')

@@ -1,36 +1,25 @@
-import { useState } from "react"
-import {Flex, Input, Select} from 'antd'
-import { useUsers } from "../../model/User"
+import { useUrlParams } from "../../tool/useUrlParams"
+import { Flex, Input } from 'antd'
+import { UserSelect } from "./UserSelect"
 
 export const Search = () => {
-  const [param, setParam] = useState({
-    name: '',
-    personId: ''
-  })
 
-  const { data } = useUsers()
+  const [param, setParam] = useUrlParams('name', 'personId')
 
   const onInput = (name: string) => {
+    setParam({ name })
+  }
+
+  const setPersonId = (id: number) => {
     setParam({
-      ...param,
-      name
+      personId: id === 0 ? '' : String(id)
     })
   }
 
-  const onSelect = (personId: string) => {
-    setParam({
-      ...param,
-      personId
-    })
-  }
-
-  return <Flex gap='middle' style={{width: '39rem'}}>
-    <Input onChange={e => onInput(e.target.value)} />
-    <Select value={param.personId} onChange={v => onSelect(v)} >
-      <Select.Option value='' >负责人</Select.Option>
-      {
-        data && data.map(user => <Select.Option value={user.id} key={user.id}>{ user.name}</Select.Option>)
-      }
-    </Select>
-  </Flex>
+  return (
+    <Flex gap='middle' style={{ width: '39rem' }}>
+      <Input value={param.name} onChange={e => onInput(e.target.value)} />
+      <UserSelect value={Number(param.personId)} onChange={id => setPersonId(id)} />
+    </Flex>
+  )
 }

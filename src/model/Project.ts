@@ -2,6 +2,7 @@ import { useUsers } from "./User"
 import { useMemo } from "react"
 import { http } from "../http"
 import { useQuery } from "@tanstack/react-query"
+import { useUrlParams } from "../tool/useUrlParams"
 
 export type ProjectType = {
   id?: number,
@@ -22,7 +23,9 @@ export const useProjects = () => {
     queryFn: () => http.get<any, ProjectType[]>(Project.url.projects)
   })
 }
-
+/**
+ * table表单需要的数据
+ */
 export const useProjectsUsers = () => {
   const projects = useProjects()
   const users = useUsers()
