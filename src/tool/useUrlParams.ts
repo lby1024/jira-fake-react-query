@@ -33,8 +33,6 @@ export function useUrlParams<K extends string>(...keys: K[]) {
       ...Object.fromEntries(p),
       ...param
     })
-    console.log(param, 99999);
-
     setP(param)
   }
 

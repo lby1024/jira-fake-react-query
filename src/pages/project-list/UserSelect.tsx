@@ -21,7 +21,7 @@ export const UserSelect: FC<IUserSelect> = ({ value: personId, onChange }) => {
   }, [users])
 
   const label = useMemo(() => {
-    if (!options || !personId) return
+    if (!options) return
     const user = options.find(item => item.value === personId)
     if (user) return user.label
   }, [personId, options])
@@ -30,6 +30,6 @@ export const UserSelect: FC<IUserSelect> = ({ value: personId, onChange }) => {
     options={options}
     value={label}
     onSelect={v => onChange(Number(v))}
-    placeholder='管理员'
+    style={{ minWidth: 100 }}
   />
 }

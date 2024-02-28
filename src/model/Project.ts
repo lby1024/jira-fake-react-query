@@ -1,8 +1,9 @@
-import { useUsers } from "./User"
+import { UserType, useUsers } from "./User"
 import { useMemo } from "react"
 import { http } from "../http"
 import { useQuery } from "@tanstack/react-query"
 import { useUrlParams } from "../tool/useUrlParams"
+import { cleanObj } from "../tool"
 
 export type ProjectType = {
   id?: number,
@@ -11,23 +12,39 @@ export type ProjectType = {
   organization?: string
 }
 
+type SearchParam = {
+  name?: string
+  personId?: number
+}
+
 export class Project {
   static url = {
     projects: 'projects'
   }
+
+  static getProjects(data: UserType) {
+
+    return http.get<UserType, ProjectType[]>(
+      Project.url.projects,
+      { data }
+    )
+  }
 }
 
-export const useProjects = () => {
+export const useProjects = (param: SearchParam) => {
+  const data = cleanObj(param)
+
   return useQuery({
-    queryKey: [Project.url.projects],
-    queryFn: () => http.get<any, ProjectType[]>(Project.url.projects)
+    queryKey: [Project.url.projects, data],
+    queryFn: () => Project.getProjects(data)
+
   })
 }
 /**
  * table表单需要的数据
  */
-export const useProjectsUsers = () => {
-  const projects = useProjects()
+export const useProjectsUsers = (param: UserType) => {
+  const projects = useProjects(param)
   const users = useUsers()
 
   const data = useMemo(() => {
@@ -46,4 +63,24 @@ export const useProjectsUsers = () => {
     error: projects.error || users.error || null,
     data,
   }
+}
+
+export const useProjectParams = () => {
+  const [p, setP] = useUrlParams('name', 'personId')
+
+  const param: SearchParam = useMemo(() => {
+    return {
+      name: p.name,
+      personId: p.personId ? Number(p.personId) : 0
+    }
+  }, [p])
+
+  const setParam = (p: SearchParam) => {
+    setP({
+      name: p.name,
+      personId: p.personId ? String(p.personId) : ''
+    })
+  }
+
+  return [param, setParam] as const
 }

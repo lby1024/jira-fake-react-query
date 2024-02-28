@@ -10,25 +10,42 @@ export const sleep = (time = 1000) => new Promise(reso => {
   }, time)
 })
 
+type Target = null | undefined | '' | 0
 
+export const shuoldClean = (value: unknown, targets: Target[]) => {
+  let clean = false
+  if (value) return clean
+
+  targets.every(item => {
+    if (item === value) {
+      clean = true
+      return false  // 返回false表示退出循环
+    }
+    return true
+  })
+
+  return clean
+}
 /**
- * 是否为 null, undefined, '', 等
+ * clean(obj, ['null', 'undefined']) 清除 value = null | undefined 的属性
  */
-export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
-/**
- * {a: 0, b: null} --> {a: 0}
- */
-export const cleanObj = <O extends object>(obj?: O) => {
+export const cleanObj = (
+  obj: object,
+  targets: Target[] = ['', 0, null, undefined]
+) => {
+
   if (!obj) {
     return {}
   }
+
   const res: any = { ...obj }
   Object.keys(res).forEach(key => {
     const v = res[key]
-    if (isFalsy(v)) {
+
+    if (shuoldClean(v, targets)) {
       delete res[key]
     }
   })
 
-  return res as Partial<O>
+  return res
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as qs from 'qs'
 import {
   env,
   developmentBaseUrl,
@@ -33,6 +34,10 @@ axios.defaults.headers["Content-Type"] = "application/json"
 axios.interceptors.request.use(
   // 请求前携带token
   (req) => {
+    if (req.method === 'get' && req.data) {
+      const params = qs.stringify(req.data)
+      req.url += `?${params}`
+    }
     let token = Auth.getToken()
     if (token && req.headers && typeof req.headers.set === "function") {
       req.headers.set("Authorization", `Bearer ${token}`);
