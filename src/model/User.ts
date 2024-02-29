@@ -25,7 +25,6 @@ export const useUsers = () => {
   return useQuery<UserType[]>({
     queryKey: [User.url.users],
     queryFn: () => http.get(User.url.users),
-    enabled: false
   })
 }
 

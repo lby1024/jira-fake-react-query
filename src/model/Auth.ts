@@ -49,7 +49,6 @@ export const useAuth = () => {
 
   const getUserInfo = async () => {
     const user = await refetch()
-    console.log(user, 'xxxxx');
     setUser(user)
   }
 

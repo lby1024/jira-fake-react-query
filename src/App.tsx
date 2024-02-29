@@ -7,9 +7,9 @@ import { useMounted } from './tool/useMounted'
 function App() {
   const { state, getUserInfo, userInfo } = useAuth()
 
-  useMounted(() => getUserInfo)
+  useMounted(() => getUserInfo())
 
-  if (state === 'idle') return <FullPageLoading />
+  if (state === 'idle' || state === 'loading') return <FullPageLoading />
 
   return <>
     {
