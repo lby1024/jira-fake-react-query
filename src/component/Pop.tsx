@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react"
+import { useState } from "react"
 import { sleep } from "../tool"
 import { styled } from "styled-components"
 import { Alert } from "antd"

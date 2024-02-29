@@ -1,7 +1,8 @@
-import { Button, Input, message } from "antd"
+import { Button, Input } from "antd"
 import { useForm, required, min, password, rule } from "sweety-form"
 import styled from 'styled-components'
 import { useAuth } from "../../model/Auth"
+import { Pop } from "../../component/Pop"
 
 class FormModel {
   @required()
@@ -16,27 +17,18 @@ class FormModel {
 }
 
 function repassword(v: string, formData: FormModel) {
-  if(v !== formData.password) return '密码不一致'
+  if (v !== formData.password) return '密码不一致'
 }
 
 export const Regist = () => {
-  const { regist, submiting } = useAuth()
-  const [messageApi, contextHolder] = message.useMessage();
-  const [{errors}, {name, submit}] = useForm<FormModel>({
+  const { regist, state } = useAuth()
+  const [{ errors }, { name, submit }] = useForm<FormModel>({
     FormModel,
-    onSuccess: data => regist(data)
+    onSuccess: data => regist(data).catch(err => Pop.error(err.message))
   })
-  
-  const error = (err: any) => {
-    messageApi.open({
-      type: 'error',
-      content: err.message
-    });
-  };
+
 
   return <Content>
-    {contextHolder}
-
     <Input {...name('nickName')} placeholder="nick name" />
     <ErrorInfo>{errors.nickName}</ErrorInfo>
 
@@ -46,7 +38,7 @@ export const Regist = () => {
     <Input.Password {...name('repassword')} placeholder="repassword" />
     <ErrorInfo>{errors.repassword}</ErrorInfo>
 
-    <Button className="btn" type="primary" loading={submiting} onClick={submit} >注册</Button>
+    <Button className="btn" type="primary" loading={state === 'loading'} onClick={submit} >注册</Button>
   </Content>
 }
 

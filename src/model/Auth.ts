@@ -1,9 +1,6 @@
-import { useState } from "react"
 import { http } from "../http"
-import { User, UserType, useUser } from "./User"
-import create from 'use-state-link'
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Pop } from "../component/Pop";
+import { User, UserType, useUserInfo } from "./User"
+import { useHttp } from "../http/useHttp";
 
 export class Auth {
   static tokenKey = 'accessToken'
@@ -36,85 +33,70 @@ export class Auth {
 }
 
 export const useAuth = () => {
-  const queryClient = useQueryClient()
-  const user = useUser()
+  const [userInfo, setUser] = useUserInfo()
+  const { state, run, refetch } = useHttp(User.getInfo, { enabled: false })
 
-  const login = useMutation({
-    mutationFn: Auth.login,
-    onSuccess: () => user.refetch(), // 登录成功后,重新获取userInfo
-    onError: (err) => { Pop.error(err.message) }
-  })
+  const login = async (data: UserType) => {
+    const user = await run(Auth.login, data)
 
-  const regist = useMutation({
-    mutationFn: Auth.regist,
-    onSuccess: (user) => queryClient.setQueryData([User.url.me], user), // 注册成功后,修改本地缓存
-    onError: (err) => { Pop.error(err.message) },
-  })
+    setUser(user)
+  }
+
+  const regist = async (data: UserType) => {
+    const user = await run(Auth.regist, data)
+    setUser(user)
+  }
+
+  const getUserInfo = async () => {
+    const user = await refetch()
+    console.log(user, 'xxxxx');
+    setUser(user)
+  }
 
   Auth.logout = () => {
-    queryClient.setQueryData([User.url.me], null)
-    queryClient.clear() // clear数据清空后,视图并不会响应,所有上面要用setQueryData
-    Auth.setToken('')
-  }
-
-  return {
-    ...user,
-    userInfo: user.data,
-    submiting: login.isPending || regist.isPending,
-    login: login.mutate,
-    regist: regist.mutate,
-    logout: Auth.logout,
-  }
-}
-
-export const useUserInfo = create<UserType>(null)
-type AuthState = 'idle' | 'loading' | 'success' | 'error'
-
-export const useAuth2 = () => {
-  const [user, setUser] = useUserInfo()
-  const [state, setState] = useState<AuthState>('idle')
-
-  const login = (data: UserType) => {
-    setState('loading')
-    return Auth.login(data)
-      .then(user => {
-        setUser(user)
-        setState('success')
-      })
-      .catch(() => setState('error'))
-  }
-
-  const regist = (data: UserType) => {
-    setState('loading')
-    return Auth.regist(data)
-      .then(user => {
-        setUser(user)
-        setState('success')
-      })
-      .catch(() => setState('error'))
-  }
-
-  const getUserInfo = () => {
-    setState('loading')
-    return http.get(User.url.me)
-      .then(user => {
-        setUser(user)
-        setState('success')
-      })
-      .catch(() => setState('error'))
-  }
-
-  const logout = () => {
     setUser(null)
     Auth.setToken('')
   }
 
   return {
-    user,
+    userInfo,
     state,
     login,
     regist,
-    logout,
+    logout: Auth.logout,
     getUserInfo,
   }
 }
+
+
+// export const useAuth = () => {
+//   const queryClient = useQueryClient()
+//   const user = useUser()
+
+//   const login = useMutation({
+//     mutationFn: Auth.login,
+//     onSuccess: () => user.refetch(), // 登录成功后,重新获取userInfo
+//     onError: (err) => { Pop.error(err.message) }
+//   })
+
+//   const regist = useMutation({
+//     mutationFn: Auth.regist,
+//     onSuccess: (user) => queryClient.setQueryData([User.url.me], user), // 注册成功后,修改本地缓存
+//     onError: (err) => { Pop.error(err.message) },
+//   })
+
+//   Auth.logout = () => {
+//     queryClient.setQueryData([User.url.me], null)
+//     queryClient.clear() // clear数据清空后,视图并不会响应,所有上面要用setQueryData
+//     Auth.setToken('')
+//   }
+
+//   return {
+//     ...user,
+//     userInfo: user.data,
+//     submiting: login.isPending || regist.isPending,
+//     login: login.mutate,
+//     regist: regist.mutate,
+//     logout: Auth.logout,
+//   }
+// }

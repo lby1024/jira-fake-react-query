@@ -65,22 +65,3 @@ export const useProjectsUsers = (param: UserType) => {
   }
 }
 
-export const useProjectParams = () => {
-  const [p, setP] = useUrlParams('name', 'personId')
-
-  const param: SearchParam = useMemo(() => {
-    return {
-      name: p.name,
-      personId: p.personId ? Number(p.personId) : 0
-    }
-  }, [p])
-
-  const setParam = (p: SearchParam) => {
-    setP({
-      name: p.name,
-      personId: p.personId ? String(p.personId) : ''
-    })
-  }
-
-  return [param, setParam] as const
-}

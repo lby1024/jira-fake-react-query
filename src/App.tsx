@@ -2,11 +2,14 @@ import { FullPageLoading } from './component/FullPage'
 import { useAuth } from './model/Auth'
 import { LoginPage } from './pages/login'
 import { HeadLayout } from './router/HeadLayout'
+import { useMounted } from './tool/useMounted'
 
 function App() {
-  const { userInfo, isLoading } = useAuth()
+  const { state, getUserInfo, userInfo } = useAuth()
 
-  if (isLoading) return <FullPageLoading />
+  useMounted(() => getUserInfo)
+
+  if (state === 'idle') return <FullPageLoading />
 
   return <>
     {

@@ -1,7 +1,7 @@
 import { Checkbox, Table } from "antd"
 import dayjs from "dayjs";
 import { useProjectsUsers } from "../../model/Project";
-import { useProjectParams } from "../../model/Project";
+import { useUrlParams } from "../../tool/useUrlParams";
 
 const columns = [
   {
@@ -31,7 +31,7 @@ const columns = [
 
 export const ProjectTable = () => {
 
-  const [param] = useProjectParams()
+  const [param] = useUrlParams('name', 'personId')
 
   const { data, error, isloading } = useProjectsUsers(param)
 

@@ -3,12 +3,13 @@ import { FC, useMemo } from 'react'
 import { Select } from 'antd'
 
 interface IUserSelect {
-  value?: number
-  onChange?: (v: number) => void
+  value?: string
+  onChange?: (v: string) => void
 }
 
-export const UserSelect: FC<IUserSelect> = ({ value: personId, onChange }) => {
+export const UserSelect: FC<IUserSelect> = ({ value, onChange }) => {
   const { data: users } = useUsers()
+  const personId = value ? Number(value) : 0
 
   const options = useMemo(() => {
     if (!users) return null
@@ -29,7 +30,7 @@ export const UserSelect: FC<IUserSelect> = ({ value: personId, onChange }) => {
   return <Select
     options={options}
     value={label}
-    onSelect={v => onChange(Number(v))}
+    onSelect={v => onChange(v)}
     style={{ minWidth: 100 }}
   />
 }

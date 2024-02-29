@@ -1,7 +1,8 @@
-import { Button, Input, message } from "antd"
+import { Button, Input } from "antd"
 import { useForm, required, min, password } from "sweety-form"
 import styled from 'styled-components'
 import { useAuth } from "../../model/Auth"
+import { Pop } from "../../component/Pop"
 
 
 class FormModel {
@@ -14,30 +15,22 @@ class FormModel {
 }
 
 export const Login = () => {
-  const { login, submiting } = useAuth()
-  const [messageApi, contextHolder] = message.useMessage();
-  const [{errors}, {name, submit}] = useForm<FormModel>({
+  const { login, state } = useAuth()
+  const [{ errors }, { name, submit }] = useForm<FormModel>({
     FormModel,
-    onSuccess: data => login(data)
+    onSuccess: data => login(data).catch(err => Pop.error(err.message))
   })
-  
-  const showError = (err: any) => {
-    messageApi.open({
-      type: 'error',
-      content: err.message
-    });
-  };
+
+
 
   return <Content>
-    {contextHolder}
-
     <Input {...name('nickName')} placeholder="nick name" />
     <ErrorInfo>{errors.nickName}</ErrorInfo>
 
     <Input.Password {...name('password')} placeholder="password" />
     <ErrorInfo>{errors.password}</ErrorInfo>
 
-    <Button className="btn" type="primary" loading={submiting} onClick={submit} >登录</Button>
+    <Button className="btn" type="primary" loading={state === 'loading'} onClick={submit} >登录</Button>
   </Content>
 }
 

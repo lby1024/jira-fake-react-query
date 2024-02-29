@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import * as qs from 'qs'
 import {
   env,
@@ -34,14 +34,8 @@ axios.defaults.headers["Content-Type"] = "application/json"
 axios.interceptors.request.use(
   // 请求前携带token
   (req) => {
-    if (req.method === 'get' && req.data) {
-      const params = qs.stringify(req.data)
-      req.url += `?${params}`
-    }
-    let token = Auth.getToken()
-    if (token && req.headers && typeof req.headers.set === "function") {
-      req.headers.set("Authorization", `Bearer ${token}`);
-    }
+    urlParams(req)
+    takeToken(req)
     return req;
   },
   // 发送请求失败走这里
@@ -59,3 +53,20 @@ axios.interceptors.response.use(
 );
 
 export const http = axios
+/**
+ * 如果是get请求就将参数放到url
+ */
+const urlParams = (req: InternalAxiosRequestConfig<any>) => {
+  let params = ''
+  if (req.method === 'get' && req.data) {
+    params = qs.stringify(req.data)
+  }
+  if (params) req.url += `?${params}`
+}
+
+const takeToken = (req: InternalAxiosRequestConfig<any>) => {
+  let token = Auth.getToken()
+  if (token && req.headers && typeof req.headers.set === "function") {
+    req.headers.set("Authorization", `Bearer ${token}`);
+  }
+}

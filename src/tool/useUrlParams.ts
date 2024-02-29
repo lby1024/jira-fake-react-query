@@ -17,7 +17,8 @@ export function useUrlParams<K extends string>(...keys: K[]) {
   const params: Param<K> = useMemo(() => {
     // 数组转对象
     return keys.reduce((res, key) => {
-      res[key] = p.get(key)
+      const v = p.get(key)
+      if (v) res[key] = v
       return res
     }, {} as any)
   }, [p])
