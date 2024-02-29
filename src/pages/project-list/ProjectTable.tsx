@@ -2,6 +2,7 @@ import { Checkbox, Table } from "antd"
 import dayjs from "dayjs";
 import { useProjectsUsers } from "../../model/Project";
 import { useUrlParams } from "../../tool/useUrlParams";
+import { useDebounce } from "../../tool/useDebounce";
 
 const columns = [
   {
@@ -32,8 +33,9 @@ const columns = [
 export const ProjectTable = () => {
 
   const [param] = useUrlParams('name', 'personId')
+  const paramDelay = useDebounce(param)
 
-  const { data, error, isloading } = useProjectsUsers(param)
+  const { data, error, isloading } = useProjectsUsers(paramDelay)
 
   return <Table columns={columns} dataSource={data} loading={isloading} pagination={false} />
 }

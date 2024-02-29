@@ -37,7 +37,6 @@ export const useProjects = (param: SearchParam) => {
   return useQuery({
     queryKey: [Project.url.projects, data],
     queryFn: () => Project.getProjects(data)
-
   })
 }
 /**
