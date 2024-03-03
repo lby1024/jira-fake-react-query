@@ -24,7 +24,7 @@ export const Regist = () => {
   const { regist, state } = useAuth()
   const [{ errors }, { name, submit }] = useForm<FormModel>({
     FormModel,
-    onSuccess: data => regist(data).catch(err => Pop.error(err.message))
+    onSuccess: data => regist(data).catch(err => Pop.open.error(err.message))
   })
 
 

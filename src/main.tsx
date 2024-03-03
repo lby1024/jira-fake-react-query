@@ -13,3 +13,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </Query>
   </React.StrictMode>,
 )
+document.getElementById('root').clientHeight

@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react"
+
 export const resetRoute = () => {
   window.location.href = window.location.origin
 }
@@ -48,4 +50,8 @@ export const cleanObj = (
   })
 
   return res
+}
+
+export function isFunction(value: any) {
+  return typeof value === 'function';
 }

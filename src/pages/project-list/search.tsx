@@ -1,6 +1,7 @@
 import { Flex, Input } from 'antd'
-import { UserSelect } from "./UserSelect"
+import { UserSelect } from "../../component/UserSelect"
 import { useUrlParams } from '../../tool/useUrlParams'
+import styled from 'styled-components'
 
 export const Search = () => {
   // 双向绑定url中的 name, personId
@@ -17,7 +18,11 @@ export const Search = () => {
   return (
     <Flex gap='middle' style={{ width: '39rem' }}>
       <Input placeholder='项目名称' value={param.name} onChange={e => onInput(e.target.value)} />
-      <UserSelect value={param.personId} onChange={id => setPersonId(id)} />
+      <Selec value={param.personId} onChange={id => setPersonId(id)} />
     </Flex>
   )
 }
+
+const Selec = styled(UserSelect)`
+  width: 120px;
+`

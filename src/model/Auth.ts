@@ -5,8 +5,8 @@ import { useHttp } from "../http/useHttp";
 export class Auth {
   static tokenKey = 'accessToken'
   static url = {
-    login: 'login',
-    regist: 'regist'
+    login: 'user/login',
+    regist: 'user/regist'
   }
 
   static setToken(token: string) {
@@ -38,7 +38,6 @@ export const useAuth = () => {
 
   const login = async (data: UserType) => {
     const user = await run(Auth.login, data)
-
     setUser(user)
   }
 
@@ -75,13 +74,13 @@ export const useAuth = () => {
 //   const login = useMutation({
 //     mutationFn: Auth.login,
 //     onSuccess: () => user.refetch(), // 登录成功后,重新获取userInfo
-//     onError: (err) => { Pop.error(err.message) }
+//     onError: (err) => { Pop.opn.error(err.message) }
 //   })
 
 //   const regist = useMutation({
 //     mutationFn: Auth.regist,
 //     onSuccess: (user) => queryClient.setQueryData([User.url.me], user), // 注册成功后,修改本地缓存
-//     onError: (err) => { Pop.error(err.message) },
+//     onError: (err) => { Pop.open.error(err.message) },
 //   })
 
 //   Auth.logout = () => {

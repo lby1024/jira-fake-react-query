@@ -3,6 +3,7 @@ import { useForm, required, min, password } from "sweety-form"
 import styled from 'styled-components'
 import { useAuth } from "../../model/Auth"
 import { Pop } from "../../component/Pop"
+import { ErrorInfo } from "../../component/ErrorInfo"
 
 
 class FormModel {
@@ -18,7 +19,7 @@ export const Login = () => {
   const { login, state } = useAuth()
   const [{ errors }, { name, submit }] = useForm<FormModel>({
     FormModel,
-    onSuccess: data => login(data).catch(err => Pop.error(err.message))
+    onSuccess: data => login(data).catch(err => Pop.open.error(err.message))
   })
 
 
@@ -38,10 +39,4 @@ const Content = styled.div`
   .btn {
     width: 100%;
   }
-`
-
-const ErrorInfo = styled.div`
-  height: 1.6rem;
-  font-size: 12px;
-  color: deeppink;
 `

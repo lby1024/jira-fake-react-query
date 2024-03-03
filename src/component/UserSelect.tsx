@@ -1,13 +1,14 @@
-import { useUsers } from '../../model/User'
+import { useUsers } from '../model/User'
 import { FC, useMemo } from 'react'
 import { Select } from 'antd'
 
 interface IUserSelect {
   value?: string
   onChange?: (v: string) => void
+  className?: string
 }
 
-export const UserSelect: FC<IUserSelect> = ({ value, onChange }) => {
+export const UserSelect: FC<IUserSelect> = ({ value, onChange, className }) => {
   const { data: users } = useUsers()
   const personId = value ? Number(value) : 0
 
@@ -28,9 +29,9 @@ export const UserSelect: FC<IUserSelect> = ({ value, onChange }) => {
   }, [personId, options])
 
   return <Select
+    className={className}
     options={options}
     value={label}
     onSelect={v => onChange(v)}
-    style={{ minWidth: 100 }}
   />
 }

@@ -12,8 +12,8 @@ export type UserType = {
 export class User {
 
   static url = {
-    me: 'me',
-    users: 'users'
+    me: 'user/me',
+    users: 'user/list'
   }
 
   static getInfo() {
