@@ -5,6 +5,7 @@ import { cleanObj } from "../tool"
 import { UserType, useUsers } from "./User"
 import { useMemo } from "react"
 import { Pop } from "../component/Pop"
+import { useLocation } from "react-router-dom"
 
 export const useCreateProject = () => {
   const client = useQueryClient()
@@ -129,3 +130,8 @@ export const useProjectsUsers = (param: UserType) => {
   }
 }
 
+export function useProjectIdInUrl() {
+  const { pathname } = useLocation()
+  const id = pathname.match(/\/projects\/(\d+)\/kanban/)?.[1]
+  return Number(id)
+}

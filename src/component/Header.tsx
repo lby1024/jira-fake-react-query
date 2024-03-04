@@ -9,7 +9,7 @@ const UserBtn = () => {
 
     const items: MenuProps['items'] = [{
         key: '1',
-        label: <div onClick={logout} >登出</div>
+        label: <div onClick={() => logout()} >登出</div>
     }]
 
     return <Dropdown menu={{ items }} >
@@ -21,7 +21,7 @@ const Header: FC = () => {
 
     return (
         <Container>
-            <h3 className="jira" onClick={resetRoute} >Jira</h3>
+            <h3 className="jira" onClick={() => resetRoute()} >Jira</h3>
             <div>项目</div>
             <div>用户</div>
             <div></div>

@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react"
 
 export const resetRoute = () => {
   window.location.href = window.location.origin

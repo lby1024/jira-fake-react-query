@@ -5,20 +5,21 @@ import styled from "styled-components"
 const { Sider, Content } = Layout
 
 const items: MenuProps['items'] = [
-  {label: <Link to='kanban' >看板</Link>, key: 'kanban', },
-  {label: <Link to='epic'>epic</Link>, key: 'epic'}
+  { label: <Link to='kanban' >看板</Link>, key: 'kanban', },
+  { label: <Link to='epic'>加载更多</Link>, key: 'epic' },
+  { label: <Link to='student'>分页</Link>, key: 'student' }
 ]
 
 const useCurKey = () => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const names = pathname.split('/')
-  return names[names.length-1]
+  return names[names.length - 1]
 }
 
 export const SideNavLayout = () => {
 
   const curKey = useCurKey()
-  
+
   return <MyLayout>
     <Sider theme="light" >
       <Menu className="menu" items={items} defaultSelectedKeys={[curKey]} mode='inline' />
