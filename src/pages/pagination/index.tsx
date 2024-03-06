@@ -2,7 +2,7 @@ import { Table } from "antd"
 import dayjs from "dayjs";
 import { useStudents } from "../../model/Student";
 
-export const StudentPage = () => {
+export const Pagination = () => {
   const { list, paginationConfig, isloading } = useStudents(9)
 
   const columns = [

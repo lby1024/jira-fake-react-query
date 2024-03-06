@@ -6,8 +6,9 @@ const { Sider, Content } = Layout
 
 const items: MenuProps['items'] = [
   { label: <Link to='kanban' >看板</Link>, key: 'kanban', },
-  { label: <Link to='epic'>加载更多</Link>, key: 'epic' },
-  { label: <Link to='student'>分页</Link>, key: 'student' }
+  { label: <Link to='epic'>epic</Link>, key: 'epic' },
+  { label: <Link to='pagination'>分页</Link>, key: 'pagination' },
+  { label: <Link to='infinity'>infinity</Link>, key: 'infinity' },
 ]
 
 const useCurKey = () => {

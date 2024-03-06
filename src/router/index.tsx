@@ -3,7 +3,8 @@ import { ProjectList } from "../pages/project-list";
 import { PageKanban } from "../pages/kanban";
 import { EpicPage } from "../pages/epic";
 import { SideNavLayout } from "./SideNavLayout";
-import { StudentPage } from "../pages/students";
+import { Pagination } from "../pages/pagination";
+import { InfinityPage } from "../pages/infinity";
 
 const sideNavRouter: RouteObject[] = [{
   path: 'kanban',
@@ -12,8 +13,11 @@ const sideNavRouter: RouteObject[] = [{
   path: 'epic',
   element: <EpicPage />
 }, {
-  path: 'student',
-  element: <StudentPage />
+  path: 'pagination',
+  element: <Pagination />
+}, {
+  path: 'infinity',
+  element: <InfinityPage />
 }, {
   path: '',
   element: <Navigate to={window.location.pathname + "/kanban"} />

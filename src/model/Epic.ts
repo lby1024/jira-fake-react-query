@@ -29,15 +29,3 @@ export class Epic {
     return http.get<PageInput, PageOutPut>(`${Epic.url.epic}`, { data })
   }
 }
-
-export const useEpics = () => {
-  const epics = useInfiniteQuery({
-    queryKey: [Epic.url.epic],
-    queryFn: Epic.getEpics,
-    initialPageParam: 1,
-    getNextPageParam: lastPage => lastPage.next,
-    getPreviousPageParam: firstPage => firstPage.prev
-  })
-
-  return epics
-}
